@@ -30,8 +30,7 @@ class FeatureExtraction:
         href_results = []
         count_of_bad_instances = 0
 
-        head = {
-            'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.47 Safari/537.36'}
+        head = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.47 Safari/537.36'}
 
         # try and use BeautifulSoup to grab the url's corresponding page and get all of the links (hrefs)
         try:
@@ -82,3 +81,35 @@ class FeatureExtraction:
         # if an error occurs append error to the feature list
         except Exception as e:
             self.arff_List.append("ErrorHREFs")
+            
+def num_and_special_characters(self):
+
+        char_list_count = ['.', '-', "_", "%", "&", "#"]  # initialise list of characters to search for
+
+        count = 0  # set count of numbers in the url to zero
+
+        # for each item in the list of characters, append the number of occurrences of said character to the feature list
+        for character in char_list_count:
+            self.arff_List.append(self.url.count(character))
+
+        # if tilde is present in the url append yes to the feature list, else append no
+        if "~" in self.url:
+            self.arff_List.append("Yes~")
+
+        else:
+            self.arff_List.append("No~")
+
+        # if the at symbol is present in the url append yes to the feature list, else append no
+        if "@" in self.url:
+            self.arff_List.append("Yes@")
+
+        else:
+            self.arff_List.append("No@")
+
+        # loop through each character in the url and determine if it is a number
+        for character in self.url:
+
+            if character.isdigit():
+                count += 1
+
+        self.arff_List.append(count)  # append the number of numbers to the feature list            
