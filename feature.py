@@ -1,22 +1,31 @@
+import csv
+import os
 import time
-import weka.core.jvm as jvm
-import weka.core.serialization as serialization
-from weka.core.converters import Loader
-from weka.classifiers import Classifier
-from featureExtraction import FeatureExtraction
-from mainHandler import *
+import arff
+from urllib.parse import urlparse
+import tldextract
+from parseTLDList import ParseTLD
+from search_engine_parser.core.engines import GoogleSearch, YahooSearch
+import urllib.request
+from bs4 import BeautifulSoup
+import requests
+from urllib.request import socket
 
-class URLAnalysis:
-  Constructor
-    def __init__(self, url):
 
-        self.results_list = []
-        self.weka_model = "trained-random-tree.model"
-        self.dataset = "url.arff"
-        self.url = url
-        self.prediction = ""
-        
- def href_check(self):
+# Feature extraction
+class FeatureExtraction:
+    def __init__(self):
+        self.url = ""
+        self.scheme = ""
+        self.domain = ""
+        self.path = ""
+        self.query = ""
+        self.arff_List = []
+        self.url_list = []
+        self.tld_list = ParseTLD().parse()  # call class function within parseTLDlist.py to create list of all tlds
+
+    # function which determines if the links within the url's corresponding page are characteristic of a phishing page
+    def href_check(self):
 
         href_results = []
         count_of_bad_instances = 0
@@ -72,4 +81,4 @@ class URLAnalysis:
 
         # if an error occurs append error to the feature list
         except Exception as e:
-            self.arff_List.append("ErrorHREFs")        
+            self.arff_List.append("ErrorHREFs")
