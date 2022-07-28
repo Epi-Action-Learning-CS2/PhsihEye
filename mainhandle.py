@@ -49,8 +49,52 @@ class MainHandler:
             os.system("clear")
             self.show_banner()
             print("URL: " + colored(self.url, 'white') + "\n")
-            print(colored("[*]  ERROR: The url is NOT VALID  [*]\n", 'red'))
+            print(colored("[*]  ERROR: The url is NOT VALID  [*]\n", 'orange'))
             exit()
+
+     # main function
+def run(self):
+    self.get_url()
+    # print the url 
+    print("URL: " + colored(self.url, 'white') + "\n")
+
+    self.extract_domain()  # call function to determine the domain associated with the url
+
+    # run white and blacklist tests from WhiteBlack class against the url
+    white_black_test = WhiteBlackApp(self.url, self.domain)
+    white_black_results = white_black_test.run()
+
+    # if the blacklist test has been failed, print FAIL message
+    if white_black_results[0]:
+
+        # UI
+        print(colored("\n[*] THE URL HAS BEEN DETERMINED AS SUSPICIOUS [*]\n", 'red', attrs=['bold']))
+
+    # else if the whitelist test has been passed, print PASS message
+    elif white_black_results[1]:
+
+        # UI
+        print(colored("\n[*] THE URL HAS BEEN DETERMINED AS NOT SUSPICIOUS [*]\n", 'green', attrs=['bold']))
+
+    # else call URLAnalysis class and use its functions to determine if the url is "suspicious" or not via
+    # feature extraction and machine learning
+    else:
+
+        result = URLAnalysis(self.url)
+        ml_result = result.run()
+
+        # if the result returned from URLAnalysis is 1.0 ("suspicious"), print FAIL message
+        if ml_result:
+
+            # UI
+            print(colored("\n[*] THE URL HAS BEEN DETERMINED AS SUSPICIOUS VIA MACHINE LEARNING [*]\n", 'red',
+                          attrs=['bold']))
+
+        # else print PASS message
+        else:
+
+            # UI
+            print(colored("\n[*] THE URL HAS BEEN DETERMINED AS NOT SUSPICIOUS VIA MACHINE LEARNING [*]\n", 'green', attrs=['bold']))       
     
     
     
