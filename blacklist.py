@@ -42,19 +42,19 @@ class WhiteBlackApp:
     # function which reads each line of a csv and saves it to a whitelist or blacklist via a list of lists
     def populate_lists(self):
 
-        #with open('whitelistURL.csv', 'r') as file:  # whitelist of urls
+        with open('whitelistURL.csv', 'r') as file:  # whitelist of urls
             read = csv.reader(file)
             self.whitelist_url = list(read)
 
         file.close()
 
-        #with open('blacklistURL.csv', 'r') as file:  # blacklist of urls
+        with open('blacklistURL.csv', 'r') as file:  # blacklist of urls
             read = csv.reader(file)
             self.blacklist_url = list(read)
 
         file.close()
 
-        #with open('domains.csv', 'r') as file:  # whitelist of top domains
+        with open('domains.csv', 'r') as file:  # whitelist of top domains
             read = csv.reader(file)
             top_domains_csv = list(read)
 
