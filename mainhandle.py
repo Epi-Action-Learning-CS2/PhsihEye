@@ -49,7 +49,7 @@ class MainHandler:
             os.system("clear")
             self.show_banner()
             print("URL: " + colored(self.url, 'white') + "\n")
-            print(colored("[*]  ERROR: The url is NOT VALID  [*]\n", 'orange'))
+            print(colored("[*]  ERROR: The url is NOT VALID  [*]\n", 'red'))
             exit()
 
      # main function
@@ -100,7 +100,7 @@ def run(self):
     
     def show_banner(self):
         os.system("clear")
-        print(pyfiglet.figlet_format("'PhishEye'"))
+        print(colored(pyfiglet.figlet_format("'P h i s h E y e'"), color="blue"))
         print("----------------------------------------------------------\n")        
 
 
